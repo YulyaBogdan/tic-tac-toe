@@ -14,19 +14,29 @@ class TicTacToe {
     }
 
     nextTurn(rowIndex, columnIndex) {
-    	if(this.table[rowIndex][columnIndex] === null){
+    	if(this.getFieldValue(rowIndex, columnIndex) === null){
     		this.table[rowIndex][columnIndex] = this.getCurrentPlayerSymbol();
     		this.symbol = !this.symbol;
     	}
     }
 
     isFinished() {
-    	if (this.isDraw() === true && this.getWinner() !== null)
-    		return true;
-    	return false;    	
+    	if (this.isDraw() === true || this.getWinner() !== null)
+			return true;
+    	return false;
     }
 
     getWinner() {
+		for (let i = 0; i < 3; i++){
+			if (this.getFieldValue(0,i) === this.getFieldValue(1,i) && this.getFieldValue(1,i) === this.getFieldValue(2,i))
+				return this.getFieldValue(0,i);
+			else
+				if (this.getFieldValue(i,0) === this.getFieldValue(i,1) && this.getFieldValue(i,1) === this.getFieldValue(i,2))
+                    return this.getFieldValue(i,0);
+		}
+		if ((this.getFieldValue(0,0) === this.getFieldValue(1,1) && this.getFieldValue(1,1) === this.getFieldValue(2,2))||
+		(this.getFieldValue(0,2) === this.getFieldValue(1,1) && this.getFieldValue(1,1) === this.getFieldValue(2,0)))
+            return this.getFieldValue(1,1);
     	return null;
     }
 
@@ -46,7 +56,7 @@ class TicTacToe {
     }
 
     getFieldValue(rowIndex, colIndex) {
-    	return this.table[rowIndex][columnIndex];
+    	return this.table[rowIndex][colIndex];
     }
 }
 
